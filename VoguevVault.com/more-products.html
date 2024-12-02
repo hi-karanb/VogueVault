@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Products - VogueVault.com</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>VogueVault.com</h1>
+            <nav>
+                <ul>
+                    <li><a href="main.php">Home</a></li>
+                    <li><a href="#" id="cart-link">Cart (0)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="more-products" class="container">
+            <h2>More Products</h2>
+            <div class="sort-options">
+                <label for="sort-price">Sort by price:</label>
+                <select id="sort-price">
+                    <option value="default">Default</option>
+                    <option value="asc">Low to High</option>
+                    <option value="desc">High to Low</option>
+                </select>
+            </div>
+            <div class="filter-options">
+                <label for="filter-category">Filter by category:</label>
+                <select id="filter-category">
+                    <option value="all">All</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Hat">Hat</option>
+                    <option value="Scarf">Scarf</option>
+                    <option value="Tshirt">Tshirt</option>
+                    <option value="Jeans">Jeans</option>
+                    <option value="Jacket">Jacket</option>
+                </select>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-bar" placeholder="Search for products...">
+            </div>
+            <div class="product-grid" id="product-grid">
+                <div class="product-item" data-category="Shoes">
+                    <img src="product_images/shoes.webp" alt="Shoes">
+                    <h3>Shoes</h3>
+                    <p class="description">Comfortable and stylish shoes for all occasions.</p>
+                    <p class="price">₹3750.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-item" data-category="Hat">
+                    <img src="product_images/hat.avif" alt="Hat">
+                    <h3>Hat</h3>
+                    <p class="description">A trendy hat to complete your outfit.</p>
+                    <p class="price">₹1125.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-item" data-category="Scarf">
+                    <img src="product_images/scarf.avif" alt="Scarf">
+                    <h3>Scarf</h3>
+                    <p class="description">A warm scarf for chilly days.</p>
+                    <p class="price">₹1875.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-item" data-category="Tshirt">
+                    <img src="product_images/Tshirt.jpeg" alt="T-shirt">
+                    <h3>T-shirt</h3>
+                    <p class="description">A comfortable cotton t-shirt available in various sizes.</p>
+                    <p class="price">₹5000.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-item" data-category="Jeans">
+                    <img src="product_images/jeans.jpeg" alt="Jeans">
+                    <h3>Jeans</h3>
+                    <p class="description">Stylish denim jeans perfect for any occasion.</p>
+                    <p class="price">₹4000.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-item" data-category="Jacket">
+                    <img src="product_images/jacket.avif" alt="Jacket">
+                    <h3>Jacket</h3>
+                    <p class="description">Warm and cozy jacket for the colder months.</p>
+                    <p class="price">₹6500.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="pagination">
+                <button class="prev-page">Previous</button>
+                <span class="page-info">Page 1 of 2</span>
+                <button onclick="navigateToNextPage()" class="next-page">Next</button>
+                <script>
+                    function navigateToNextPage() {
+                        window.location.href = 'viewproducts.php';
+                    }
+                </script>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content text-center">
+            <h3>VogueVault.com</h3>
+            <div class="social-media-links">
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2024 VogueVault.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Cart Summary Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close">&times;</span>
+            <h2>Cart Summary</h2>
+            <ul class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </ul>
+            <button class="checkout">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle cart operations
+        const cartLink = document.getElementById('cart-link');
+        const cartModal = document.getElementById('cart-modal');
+        const closeModal = cartModal.querySelector('.close');
+        const cartItemsList = document.querySelector('.cart-items');
+        const checkoutButton = cartModal.querySelector('.checkout');
+        let cartItems = []; // This should ideally be stored in local storage or server-side
+
+        // Open cart modal
+        cartLink.addEventListener('click', () => {
+            cartModal.style.display = 'block';
+            updateCartSummary();
+        });
+
+        // Close cart modal
+        closeModal.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        // Update cart summary
+        function updateCartSummary() {
+            cartItemsList.innerHTML = '';
+            cartItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - ₹${item.price}`;
+                cartItemsList.appendChild(listItem);
+            });
+
+            cartLink.textContent = `Cart (${cartItems.length})`;
+        }
+
+        // Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const productItem = button.closest('.product-item');
+                const name = productItem.querySelector('h3').textContent;
+                const price = productItem.querySelector('.price').textContent.replace('₹', '');
+
+                cartItems.push({ name, price });
+                updateCartSummary();
+            });
+        });
+
+        // Checkout button functionality
+        checkoutButton.addEventListener('click', () => {
+            if (cartItems.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Process checkout
+            // For simplicity, we're just logging the items. In a real application, this would redirect to a checkout page or submit data to a server.
+            console.log('Proceeding to checkout with items:', cartItems);
+
+            // Clear cart
+            cartItems = [];
+            updateCartSummary();
+
+            // Optionally redirect to checkout page
+            // window.location.href = 'checkout.php';
+        });
+    </script>
+</body>
+
+</html>
